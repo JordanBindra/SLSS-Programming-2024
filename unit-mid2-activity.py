@@ -1,5 +1,5 @@
-# unit 2 activity 
-# Jordan Bindra 
+# unit 2 activit
+# JB
 # Monday April 8 2024 
 
 def greet(name): 
