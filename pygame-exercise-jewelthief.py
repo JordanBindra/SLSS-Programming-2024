@@ -24,6 +24,7 @@ NUM_COINS = 50
 NUM_ENEMIES = 5
 
 
+
 class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -144,7 +145,8 @@ def start():
     pg.display.set_caption("Jewel Thief Clone (Nintendo Don't Sue Us)")
 
     # --Main Loop--
-    while not done:
+    colliosn_count = 0 
+    while not done: 
         # --- Event Listener
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -155,7 +157,6 @@ def start():
 
         # Get a list of ALL COINS Mario has collided with
         coins_collided = pg.sprite.spritecollide(player, coin_sprites, True)
-
         for coin in coins_collided:
            # Increase the score by 10 
            score += 10 
@@ -170,9 +171,16 @@ def start():
                 all_sprites.add(coin)
                 coin_sprites.add(coin)
 
+        # Check for collison between Mario and Snail 
+        enemies_collided = pg.sprite.spritecollide(player, enemies_sprites, False)
+        for enemy in enemies_collided: 
+            colliosn_count += 1
+            if colliosn_count >= 500: 
+                print("GAME OVER")
+                done = True 
+
         # --- Draw items
         screen.fill(WHITE)
-
         all_sprites.draw(screen)
 
         # Update the screen with anything new
