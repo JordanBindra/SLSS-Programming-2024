@@ -10,9 +10,10 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 GRAY = (128, 128, 128)
 
-WIDTH = 1000  # Pixels
-HEIGHT = 720
+WIDTH = 720  # Pixels
+HEIGHT = 1000
 SCREEN_SIZE = (WIDTH, HEIGHT)
+
 
 
 def start():
@@ -28,7 +29,7 @@ def start():
     # All sprites go in this sprite Group
     all_sprites = pg.sprite.Group()
 
-    pg.display.set_caption("<WINDOW TITLE HERE>")
+    pg.display.set_caption("Shoot 'Em Up")
 
     # --Main Loop--
     while not done:
