@@ -177,7 +177,7 @@ def start():
         enemies_collided = pg.sprite.spritecollide(player, enemies_sprites, False)
         for enemy in enemies_collided: 
             collison_count += 1
-            if collison_count >= 500: 
+            if collison_count >= 100: 
                 print("GAME OVER")
                 done = True 
 
@@ -187,7 +187,7 @@ def start():
 
         # Render score and lives 
         score_image = font.render(f"Score: {score}", True, BLACK) 
-        lives_image = font.render(f"Lives: {int(500 - collison_count)}", True, RED)
+        lives_image = font.render(f"Lives: {int(100 - collison_count)}", True, RED)
 
         all_sprites.draw(screen) 
 
