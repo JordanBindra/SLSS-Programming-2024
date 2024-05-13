@@ -119,6 +119,8 @@ def start():
 
     score = 0
 
+    font = pg.font.SysFont("Impact", 24)
+
     # Sprite Groups
     all_sprites = pg.sprite.Group()
     coin_sprites = pg.sprite.Group()
@@ -145,7 +147,7 @@ def start():
     pg.display.set_caption("Jewel Thief Clone (Nintendo Don't Sue Us)")
 
     # --Main Loop--
-    colliosn_count = 0 
+    collison_count = 0 
     while not done: 
         # --- Event Listener
         for event in pg.event.get():
@@ -174,14 +176,25 @@ def start():
         # Check for collison between Mario and Snail 
         enemies_collided = pg.sprite.spritecollide(player, enemies_sprites, False)
         for enemy in enemies_collided: 
-            colliosn_count += 1
-            if colliosn_count >= 500: 
+            collison_count += 1
+            if collison_count >= 500: 
                 print("GAME OVER")
                 done = True 
 
+
         # --- Draw items
         screen.fill(WHITE)
-        all_sprites.draw(screen)
+
+        # Render score and lives 
+        score_image = font.render(f"Score: {score}", True, BLACK) 
+        lives_image = font.render(f"Lives: {int(500 - collison_count)}", True, RED)
+
+        all_sprites.draw(screen) 
+
+        # "Blit" the surface on the screen 
+        screen.blit(score_image, (5, 5))
+        screen.blit(lives_image, (5, 35))
+
 
         # Update the screen with anything new
         pg.display.flip()
