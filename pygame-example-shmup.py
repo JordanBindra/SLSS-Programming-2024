@@ -1,6 +1,8 @@
 # pygame-example-shmup.py
 # Shoot 'em Up
 
+import random
+
 import pygame as pg
 
 # --CONSTANTS--
@@ -61,11 +63,50 @@ class Bullet(pg.sprite.Sprite):
         self.rect.centerx = player_loc[0]
         self.rect.bottom = player_loc[1]
 
+        # Set the bullet velocity 
+        self.vel = - 5 
+
+    def update(self):
+        """ Move the bullet up."""
+        self.rect.y += self.vel
+
+        # Remove the bullets if it goes of the screen
+        # bottom of the bullet is negative
+        if self.rect.bottom < 0:
+            self.kill()
+        
 
 # TODO: Enemy class
 #   - side to side movement
 #   - keep it inside the screen
 
+class Enemy(pg.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+        self.image = pg.image.load("./Images/mario.png")
+
+         # Scale the image down
+        self.image = pg.transform.scale(
+            self.image, (self.image.get_width() // 2, self.image.get_height() // 2)
+        ) 
+
+        self.rect = self.image.get_rect()
+
+      # Set initial position randomly along the top of the screen
+        self.rect.x = random.randrange(0, WIDTH - self.rect.width)
+        self.rect.y = random.randrange(0, 150)  # Spawn enemies at the top portion of the screen
+
+        # Set enemy horizontal velocity
+        self.vel_x = random.choice([-3, 3]) 
+
+        def update(self):
+          """Move the enemy side to side"""
+          self.rect.x += self.vel_x
+
+        # Bounce off the sides of the screen
+        if self.rect.left <= 0 or self.rect.right >= WIDTH:
+            self.vel_x = -self.vel_x
 
 def start():
     """Environment Setup and Game Loop"""
@@ -79,6 +120,7 @@ def start():
 
     # All sprites go in this sprite Group
     all_sprites = pg.sprite.Group()
+    enemies = pg.sprite.Group()
 
     player = Player()
 
@@ -98,6 +140,8 @@ def start():
 
         # --- Update the world state
         all_sprites.update()
+
+        print(len(all_sprites))
 
         # --- Draw items
         screen.fill(BLACK)
