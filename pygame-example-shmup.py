@@ -19,6 +19,8 @@ WIDTH = 720
 HEIGHT = 1000
 SCREEN_SIZE = (WIDTH, HEIGHT)
 
+NUM_ENEMIES = 20
+
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
@@ -107,6 +109,7 @@ class Enemy(pg.sprite.Sprite):
         # Bounce off the sides of the screen
         if self.rect.left <= 0 or self.rect.right >= WIDTH:
             self.vel_x = -self.vel_x
+          
 
 def start():
     """Environment Setup and Game Loop"""
@@ -125,6 +128,12 @@ def start():
     player = Player()
 
     all_sprites.add(player)
+
+    for _ in range(NUM_ENEMIES):
+        enemy = Enemy()
+
+        all_sprites.add(enemy)
+        enemies.add(enemy)
 
     pg.display.set_caption("Shoot 'Em Up")
 
