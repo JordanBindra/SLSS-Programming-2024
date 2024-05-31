@@ -39,6 +39,7 @@ class Player(pg.sprite.Sprite):
         """Update the location of snake with the mouse"""
         next_pos = pg.mouse.get_pos()
         self.rect.center = next_pos
+        print(self.rect.center)
     
     def grow(self):
         """Grow the snake by 5%"""
@@ -123,7 +124,6 @@ def start():
     
     # Sprite Groups
     all_sprites = pg.sprite.Group()
-    Snake_sprites = pg.sprite.Group()
     Food_sprites = pg.sprite.Group()
     Hawk_sprites = pg.sprite.Group() 
 
@@ -147,7 +147,9 @@ def start():
         Hawk_sprites.add(hawk)
     
     while not done:
-
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                done = True
 
         # Update all sprites
         all_sprites.update()
@@ -185,8 +187,6 @@ def start():
         # Render score and lives 
         score_image = font.render(f"Score: {score}", True, WHITE) 
         lives_image = font.render(f"Lives: {int(100 - collison_count)}", True, WHITE)
-
-        all_sprites.draw(screen) 
 
         # "Blit" the surface on the screen 
         screen.blit(score_image, (5, 5))
