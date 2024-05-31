@@ -100,12 +100,19 @@ class Hawk(pg.sprite.Sprite):
         if self.rect.left <= 0 or self.rect.right >= WIDTH:
             self.vel_x = -self.vel_x
 
-def display_game_over(screen): 
-    font_game_over = pg.font.SysFont("Impact, 100")
-    game_over_text = font_game_over.rect("Game Over", True, WHITE)
-    game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-    screen.blit(game_over_text, game_over_rect)
-    pg.display.flip()
+def display_game_over(screen: pg.Surface):
+    font_game_over = pg.font.SysFont("Impact",  100)
+
+    while True:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+
+        screen.fill(BLACK)    
+        game_over_text = font_game_over.render("Game Over", True, WHITE)
+        # game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        screen.blit(game_over_text, (500, 500))
+        pg.display.flip()
 
 def start():
     """Environment Setup and Game Loop"""
@@ -129,6 +136,8 @@ def start():
 
     player = Player()
     all_sprites.add(player)
+
+    game_over = False
     
 
     # Create Food objects
@@ -178,8 +187,9 @@ def start():
         for hawk in Hawk_collided: 
             collison_count += 1
             if collison_count >= 100: 
+                game_over = True 
                 print("GAME OVER")
-                done = True 
+                
 
         screen.fill(BLACK)
         all_sprites.draw(screen)
@@ -191,14 +201,9 @@ def start():
         # "Blit" the surface on the screen 
         screen.blit(score_image, (5, 5))
         screen.blit(lives_image, (5, 35))
+        if game_over: 
+            display_game_over(screen)
 
-        # if collison_count >= 100:
-        #     while True:
-        #         for event in pg.event.get():
-        #             if event.type == pg.QUIT:
-        #                 done = True
-
-        #         display_game_over(screen) 
 
         pg.display.flip()
         clock.tick(60)
