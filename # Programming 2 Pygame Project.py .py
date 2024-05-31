@@ -112,7 +112,7 @@ def display_game_over(screen: pg.Surface):
         game_over_text = font_game_over.render("Game Over", True, WHITE)
         # game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
         screen.blit(game_over_text, (500, 500))
-        pg.display.flip()
+        pg.display.flip() 
 
 def start():
     """Environment Setup and Game Loop"""
